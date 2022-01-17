@@ -44,8 +44,8 @@ def find_best_pruning_m(train_dataset: np.array, m_choices, num_folds=5):
         # ====== YOUR CODE: ======
         # Initiate pruning tree and Kfold
         kf = utils.KFold(n_splits=num_folds, shuffle=True, random_state=utils.ID)
-        x_train, y_train, x_test, y_test = \
-            get_dataset_split(train_set=train_dataset, test_set=test_dataset, target_attribute=target_attribute)
+        x_train = np.array(train_dataset.drop(target_attribute, axis=1).copy())
+        y_train = np.array(train_dataset[target_attribute].copy())
         fold_accs = []
         for train, test in kf.split(train_dataset):
 

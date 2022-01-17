@@ -166,7 +166,7 @@ class ID3:
         true_branch, false_branch = None, None
 
         # ====== YOUR CODE: ======
-        if np.all(labels == labels[0]):
+        if np.all(labels == labels[0]) or (len(labels) <= self.min_for_pruning):
             return Leaf(rows=rows, labels=labels)
         best_gain, best_question, best_true_rows, best_true_labels, best_false_rows, best_false_labels = \
             self.find_best_split(rows=rows, labels=labels)

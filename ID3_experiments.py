@@ -109,7 +109,7 @@ def cross_validation_experiment(plot_graph=True):
 
     best_m = None
     accuracies = []
-    m_choices = [2, 16, 32, 41, 50, 64, 95]
+    m_choices = [4, 18, 30, 50, 75]
     num_folds = 5
 
     # ====== YOUR CODE: ======

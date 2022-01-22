@@ -56,7 +56,7 @@ if __name__ == '__main__':
             To run the cross validation experiment over the K,Threshold hyper-parameters
             uncomment below code and run it
     """
-    # run_cross_validation()
+    run_cross_validation()
 
     # # ========================================================================
 

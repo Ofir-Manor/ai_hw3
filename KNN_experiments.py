@@ -1,3 +1,4 @@
+import random
 import subprocess
 
 from KNN import KNNClassifier
@@ -30,9 +31,40 @@ def get_top_b_features(x, y, b=5, k=51):
     top_b_features_indices = []
 
     # ====== YOUR CODE: ======
-    raise NotImplementedError
+    num_of_folds = 5
+    features_remain = [i for i in range(x.shape[1]-1)]
+    best_acc = 0.0
+    model = KNNClassifier(k=k)
+    kf = KFold(n_splits=num_of_folds, shuffle=True, random_state=ID)
+    while len(features_remain) > 0:
+        tot_features_acc = []
+        for index in features_remain:
+            top_b_features_indices.append(index)
+            curr_features_acc = []
+            for train, test in kf.split(x):
+                x_train_fold = np.copy(x[train])
+                y_train_fold = np.copy(y[train])
+                x_test_fold = np.copy(x[test])
+                y_test_fold = np.copy(y[test])
+                x_train_feats = x_train_fold[:, top_b_features_indices]
+                x_test_feats = x_test_fold[:, top_b_features_indices]
+                model.train(x_train=x_train_feats, y_train=y_train_fold)
+                y_pred = model.predict(x_test=x_test_feats)
+                acc = accuracy(y_test_fold, y_pred)
+                curr_features_acc.append(acc)
+            avg_feats_acc = np.mean(np.array(curr_features_acc))
+            tot_features_acc.append(avg_feats_acc)
+            top_b_features_indices.pop()
+        best_next_feature = np.argmax(np.array(tot_features_acc))
+        curr_best_acc = tot_features_acc[best_next_feature]
+        if curr_best_acc > best_acc:
+            best_acc = curr_best_acc
+        else:
+            break
+        top_b_features_indices.append(features_remain[best_next_feature])
+        features_remain.pop(best_next_feature)
+        top_b_features_indices.sort()
     # ========================
-
     return top_b_features_indices
 
 

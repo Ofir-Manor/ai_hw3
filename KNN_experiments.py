@@ -32,7 +32,7 @@ def get_top_b_features(x, y, b=5, k=51):
 
     # ====== YOUR CODE: ======
     num_of_folds = 5
-    features_remain = [i for i in range(x.shape[1]-1)]
+    features_remain = [i for i in range(x.shape[1])]
     best_acc = 0.0
     model = KNNClassifier(k=k)
     kf = KFold(n_splits=num_of_folds, shuffle=True, random_state=ID)
@@ -98,7 +98,7 @@ if __name__ == '__main__':
                                                          target_attribute='Outcome')
 
     best_k = 51
-    b = 0
+    b = 2
 
     # # ========================================================================
 
